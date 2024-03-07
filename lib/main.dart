@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_srt/injection.dart';
 
 void main() {
   configureDependencies();
