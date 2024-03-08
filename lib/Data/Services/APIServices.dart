@@ -1,5 +1,6 @@
 import 'package:flutter_srt/Data/Model/APIResponse.dart';
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 import 'dart:convert';
 
 enum EndPoint { 
@@ -13,6 +14,7 @@ enum EndPoint {
   const EndPoint(this.url);
 }
 
+@singleton
 class APIServices { 
   static const _privateKey = "WGjxqF8b2go9+eZPF7FWbfOrDrsYzrO6KCvQXDkNDaKp2OSl6t9XPWvIPYeYGbglvO2i/GDPxoIgAxjzf9c8lw==";
   static const _baseURL = "http://dpms.openobject.net:4132";

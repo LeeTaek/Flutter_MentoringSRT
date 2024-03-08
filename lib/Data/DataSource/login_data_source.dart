@@ -1,16 +1,18 @@
 import 'package:flutter_srt/Data/Services/APIServices.dart';
-import 'package:flutter_srt/Model/APIResponse.dart';
+import 'package:flutter_srt/Data/Model/APIResponse.dart';
+import 'package:injectable/injectable.dart';
+import 'package:flutter_srt/injection.dart';
 
 
-class LoginDataSource { 
+@injectable
+class LoginDataSource {
+  final _services = getIt<APIServices>();
 
-  final services = APIServices();
-
-  Future<String> verify(String code) async { 
+  Future<String?> verify(String code) async { 
     final params = {"code": code};
 
-  APIResponse<String> response = await services.postRequest(EndPoint.verify, params, (dynamic json) { 
-    return json['data'] as String;
+  APIResponse<String?> response = await _services.postRequest(EndPoint.verify, params, (dynamic json) { 
+    return json['data'] as String?;
   });
   
   return response.data;
