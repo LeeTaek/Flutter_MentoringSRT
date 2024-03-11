@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_srt/Present/Login/ViewModel/login_view_model.dart';
+import 'package:flutter_srt/Present/LoginFlow/Login/ViewModel/login_view_model.dart';
 import 'package:provider/provider.dart';
 
 class LoginView extends StatelessWidget { 
@@ -9,7 +9,6 @@ class LoginView extends StatelessWidget {
   @override 
   Widget build(BuildContext context) {
   final viewModel = Provider.of<LoginViewModel>(context); // LoginViewModel에 접근
-
   return CupertinoPageScaffold(
     child: Padding( 
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24,),
@@ -63,7 +62,7 @@ class LoginView extends StatelessWidget {
                 ),
                 TextButton(
                 onPressed: () {
-                  viewModel.moveToSignup();
+                  viewModel.moveToSignup(context);
                 },
                 child: const Text(
                   '회원가입',

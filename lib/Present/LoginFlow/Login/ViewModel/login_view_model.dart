@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_srt/Domain/UseCase/login_usecase.dart';
+import 'package:flutter_srt/Present/Coordinator/project_navigator.dart';
 import 'package:injectable/injectable.dart';
+import 'package:flutter_srt/Present/Coordinator/view_model.dart';
 
 @injectable
-class LoginViewModel with ChangeNotifier { 
+class LoginViewModel extends ViewModel with ChangeNotifier { 
   late final LoginUseCase _loginUseCase;
   String? id;
   String? password;
@@ -11,7 +13,9 @@ class LoginViewModel with ChangeNotifier {
   bool _isSavedID = false;
   bool get isSavedID => _isSavedID;
 
-  LoginViewModel(this._loginUseCase); 
+  LoginViewModel(
+    this._loginUseCase
+  ) : super(); 
 
 Future<void> veirify(String code) async { 
   this.code = await _loginUseCase.getVerify(code);
@@ -29,8 +33,8 @@ void toggleSavedID(bool value) {
   notifyListeners();
 }
 
-void moveToSignup() { 
-  
+void moveToSignup(BuildContext context) { 
+  coordinator.move(NavigationIdentifiers.none, context);
 }
 
 }

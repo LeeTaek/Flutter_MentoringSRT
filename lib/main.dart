@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_srt/Present/Login/ViewModel/login_view_model.dart';
-import 'package:flutter_srt/Present/Login/View/login_view.dart';
 import 'package:flutter_srt/injection.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_srt/Present/LoginFlow/Login/Coordinator/login_coordinator.dart';
 
 void main() {
   configureDependencies();
@@ -15,10 +13,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
-      home: ChangeNotifierProvider(
-        create: (context) => getIt<LoginViewModel>(),
-        child: const LoginView(),
-      ),
+      home: LoginCoordinator().start()
     );
   }
 }
