@@ -26,3 +26,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets: 
+   - assets/images/openobjectLogo.png
+   - assets/images/srtLogo.png
+   - assets/images/ico_login_checked_n.png
+   - assets/images/ico_login_checked_y.png

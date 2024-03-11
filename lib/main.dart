@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_srt/Present/Login/ViewModel/login_view_model.dart';
 import 'package:flutter_srt/Present/Login/View/login_view.dart';
 import 'package:flutter_srt/injection.dart';
@@ -14,10 +14,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return CupertinoApp(
       home: ChangeNotifierProvider(
         create: (context) => getIt<LoginViewModel>(),
-        child: LoginView(),
+        child: const LoginView(),
       ),
     );
   }
