@@ -9,7 +9,6 @@ class LoginViewModel extends ViewModel with ChangeNotifier {
   late final LoginUseCase _loginUseCase;
   String? id;
   String? password;
-  String? code; 
   bool _isSavedID = false;
   bool get isSavedID => _isSavedID;
 
@@ -17,11 +16,6 @@ class LoginViewModel extends ViewModel with ChangeNotifier {
     this._loginUseCase
   ) : super(); 
 
-Future<void> veirify(String code) async { 
-  this.code = await _loginUseCase.getVerify(code);
-  debugPrint(this.code);
-  notifyListeners();
-}
 
 Future<void> login() async { 
   debugPrint("$id, $password");

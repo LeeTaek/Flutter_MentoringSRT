@@ -8,6 +8,7 @@ abstract class Coordinator implements ProjectNavigator {
   );
   Widget start();
   void end();
+  void pop(BuildContext context);
 }
 
 class Dependency<T extends Widget> { 

@@ -22,6 +22,11 @@ class LoginCoordinator extends Coordinator {
   }
 
   @override 
+  void pop(BuildContext context) { 
+    
+  }
+
+  @override 
   Widget start() { 
     final viewModel = getIt<LoginViewModel>();
     viewModel.coordinator = this;

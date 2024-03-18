@@ -16,6 +16,7 @@ class SignupCoordinator extends Coordinator {
   @override
   Widget start() { 
     final viewModel = getIt<SignupViewModel>();
+    viewModel.coordinator = this;
     return ChangeNotifierProvider( 
       create: (context) => viewModel,
       child: dependency.widget,
@@ -28,5 +29,11 @@ class SignupCoordinator extends Coordinator {
 
     throw UnimplementedError();
   }  
+
+
+  void pop(BuildContext context) { 
+    Navigator.pop(context);
+  }
+
 
 }
