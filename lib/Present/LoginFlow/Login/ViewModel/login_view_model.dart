@@ -17,7 +17,16 @@ class LoginViewModel with ChangeNotifier {
 
 
 Future<void> login() async { 
-  debugPrint("$id, $password");
+  if (id == null) {
+
+  } 
+  if (password == null) { 
+
+  }
+  
+  if ((id != null) && (password != null)) {
+    _loginUseCase.login(id!, password!);
+  }
 }
 
 void toggleSavedID(bool value) { 
@@ -29,5 +38,7 @@ void toggleSavedID(bool value) {
 void moveToSignup(BuildContext context) { 
   GoRouter.of(context).push('/login_signup_verify');
 }
+
+
 
 }

@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_srt/Present/LoginFlow/Login/View/login_view.dart';
 import 'package:flutter_srt/Present/LoginFlow/Login/ViewModel/login_view_model.dart';
-import 'package:flutter_srt/Present/LoginFlow/Signup/View/signup_view.dart';
-import 'package:flutter_srt/Present/LoginFlow/Signup/ViewModel/signup_view_model.dart';
+import 'package:flutter_srt/Present/LoginFlow/Signup/Verify/View/signup_verify_view.dart';
+import 'package:flutter_srt/Present/LoginFlow/Signup/Verify/ViewModel/signup_verify_view_model.dart';
 import 'package:flutter_srt/injection.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
@@ -32,10 +31,10 @@ class Router {
     path: '/login_signup_verify',
     name:'signup_veritfy',
     builder:(context, state) {
-      final viewModel = getIt<SignupViewModel>();
+      final viewModel = getIt<SignupVerifyViewModel>();
       return ChangeNotifierProvider(
         create: (context) => viewModel,
-        child: const SignupView()
+        child: const SignupVerifyView()
         );
     },
   );

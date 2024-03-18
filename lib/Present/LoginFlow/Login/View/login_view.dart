@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_srt/Present/Components/srt_button.dart';
 import 'package:flutter_srt/Present/LoginFlow/Login/ViewModel/login_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -32,25 +33,15 @@ class LoginView extends StatelessWidget {
                 viewModel.password = password;
               },
             ),
-            const SizedBox(height: 25),
-            SizedBox(
-              height: 48,
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () async { 
-                  await viewModel.login();
-                }, 
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF476EFF),
-                  foregroundColor: const Color(0xFFFFFFFF), 
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4)
-                  )
-                ),
-                child: const Text("로그인"),
-              ),
-            ),
             const SizedBox(height: 11),
+            SRTButton(
+              width: double.infinity,
+              height: 48,
+              title: "로그인",
+              onPressed: () async {
+                 await viewModel.login();
+                } 
+            ),
             Row( 
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
