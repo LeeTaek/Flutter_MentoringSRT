@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_srt/Domain/UseCase/login_usecase.dart';
-import 'package:flutter_srt/Present/Coordinator/project_navigator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
-import 'package:flutter_srt/Present/Coordinator/view_model.dart';
 
 @injectable
-class LoginViewModel extends ViewModel with ChangeNotifier { 
+class LoginViewModel with ChangeNotifier { 
   late final LoginUseCase _loginUseCase;
   String? id;
   String? password;
@@ -28,7 +27,7 @@ void toggleSavedID(bool value) {
 }
 
 void moveToSignup(BuildContext context) { 
-  coordinator.move(NavigationIdentifiers.none, context);
+  GoRouter.of(context).push('/login_signup_verify');
 }
 
 }

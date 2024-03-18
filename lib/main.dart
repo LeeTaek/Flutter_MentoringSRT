@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_srt/injection.dart';
-import 'package:flutter_srt/Present/LoginFlow/Login/Coordinator/login_coordinator.dart';
+import 'package:flutter_srt/Present/router.dart' as srt_router;
 
 void main() {
   configureDependencies();
@@ -12,8 +12,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
-      home: LoginCoordinator().start()
+    final router = getIt<srt_router.Router>();
+    return CupertinoApp.router(
+      routerConfig: router.routerConfig,
     );
   }
 }
