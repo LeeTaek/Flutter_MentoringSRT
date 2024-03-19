@@ -14,9 +14,9 @@ class LoginDataSource {
     final params = {"code": code};
 
   APIResponse<String?> response = await _services.postRequest(EndPoint.verify, params, (dynamic json) { 
-    return json['data'] as String?;
+    return json['message'] as String?;
   });
-  return response.data;
+  return response.message;
   }
 
   Future<String?> signup(Signup signup) async { 
@@ -63,10 +63,10 @@ class LoginDataSource {
       EndPoint.getSigninCode,
       params, 
       (dynamic json) { 
-        return json['data'] as String;
+        return json['message'] as String;
       }); 
 
-      return response.data;
+      return response.message;
   }
 
 }

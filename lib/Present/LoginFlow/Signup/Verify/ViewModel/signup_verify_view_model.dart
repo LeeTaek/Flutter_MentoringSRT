@@ -14,24 +14,33 @@ class SignupVerifyViewModel with ChangeNotifier {
     GoRouter.of(context).go('/login');
   }
 
+  void pushToSignupView(BuildContext context) { 
+    GoRouter.of(context).push('/login_signup');
+  }
+
+
   Future<void> getSignupCode() async { 
     final email = idTextEditingController.text;
     if (email.isEmpty) { 
       debugPrint("Empty Textfield");
     } else {
       final getSignupResult = await _loginUseCase.getSignupcode(email);
+      if (getSignupResult == 'SUCCESS') { 
+        
+      }
       debugPrint(getSignupResult);
     }
   }
 
-  Future<void> veirify() async { 
+  Future<void> veirify(BuildContext context) async { 
     final code = codeTextEdtingController.text;
     if (code.isEmpty) { 
-      debugPrint("Empty Textfield");
+      debugPrint(code);
     } else {
       final verifyResult = await _loginUseCase.getVerify(code);
-      debugPrint(verifyResult);
-      notifyListeners();
+      if (verifyResult == 'SUCCESS' && context.mounted) { 
+        pushToSignupView(context);
+      } 
     }
   }
 

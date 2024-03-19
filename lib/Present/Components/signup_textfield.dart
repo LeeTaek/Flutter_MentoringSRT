@@ -8,8 +8,9 @@ class SignupTextField extends StatefulWidget {
   final bool obscureText;
   final String errorMessage;
   final TextEditingController controller;
+  bool isTextNotEmpty = false;
 
-  const SignupTextField({ 
+  SignupTextField({ 
     Key? key,
     required this.title,
     required this.placeholder,
@@ -25,29 +26,28 @@ class SignupTextField extends StatefulWidget {
 
 class SignupTextFieldState extends State<SignupTextField> { 
   late Text _titleLabel; 
-  late CupertinoTextField _textfield;
 
   @override 
   void initState() { 
     super.initState();
+    widget.controller.addListener(_updateTextState);
+    _updateTextState();
+
     _titleLabel = Text(
       widget.title,
       style: const TextStyle(
         color: Color.fromARGB(255, 136, 136, 136),
-        fontSize: 14
+        fontSize: 14,
+        fontFamily: 'SpoqaHanSansNeo',
+        fontWeight: FontWeight.w400
       ),
     );
+  }
 
-    _textfield = CupertinoTextField( 
-      controller: widget.controller,
-      placeholder:widget.placeholder,
-      obscureText: widget.obscureText,
-      decoration:  const BoxDecoration( 
-        border: Border(
-          bottom: BorderSide(color: Color.fromARGB(255, 238, 238, 238)),
-        )
-      )
-    );
+  void _updateTextState() { 
+    setState(() { 
+      widget.isTextNotEmpty = widget.controller.text.isNotEmpty;
+    });
   }
 
 
@@ -59,8 +59,24 @@ class SignupTextFieldState extends State<SignupTextField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _titleLabel,
-          _textfield
-        ],
+          CupertinoTextField( 
+                controller: widget.controller,
+                placeholder:widget.placeholder,
+                obscureText: widget.obscureText,
+                decoration: const BoxDecoration( 
+                  border: Border(
+                    bottom: BorderSide(color: Color.fromARGB(255, 238, 238, 238)),
+                  )
+                ), 
+                clearButtonMode: widget.isTextNotEmpty ? OverlayVisibilityMode.always : OverlayVisibilityMode.never,
+                suffix: widget.isTextNotEmpty 
+                ? CupertinoButton(
+                  onPressed: () => widget.controller.clear(),
+                  padding: EdgeInsets.zero,
+                  child: Image.asset('assets/images/ico_textfield_clear.png', width: 20, height: 20,),
+                ) : null,
+              )       
+           ],
       ) 
     );
   }

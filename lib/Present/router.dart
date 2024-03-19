@@ -1,5 +1,7 @@
 import 'package:flutter_srt/Present/LoginFlow/Login/View/login_view.dart';
 import 'package:flutter_srt/Present/LoginFlow/Login/ViewModel/login_view_model.dart';
+import 'package:flutter_srt/Present/LoginFlow/Signup/Signup/View/signup_view.dart';
+import 'package:flutter_srt/Present/LoginFlow/Signup/Signup/ViewModel/signup_view_model.dart';
 import 'package:flutter_srt/Present/LoginFlow/Signup/Verify/View/signup_verify_view.dart';
 import 'package:flutter_srt/Present/LoginFlow/Signup/Verify/ViewModel/signup_verify_view_model.dart';
 import 'package:flutter_srt/injection.dart';
@@ -27,9 +29,9 @@ class Router {
     }, 
   ) ;
 
-  final GoRoute signupRoute = GoRoute(
+  final GoRoute signupVerifyRoute = GoRoute(
     path: '/login_signup_verify',
-    name:'signup_veritfy',
+    name:'signup_verify',
     builder:(context, state) {
       final viewModel = getIt<SignupVerifyViewModel>();
       return ChangeNotifierProvider(
@@ -39,10 +41,22 @@ class Router {
     },
   );
 
+  final GoRoute signupRoute = GoRoute(
+    path: '/login_signup',
+    name:'signup',
+    builder:(context, state) {
+      final viewModel = getIt<SignupViewModel>();
+      return ChangeNotifierProvider(
+        create: (context) => viewModel,
+        child: const SignupView()
+        );
+    },
+  );
 
   late final routerConfig = GoRouter(
     routes: [
       loginRoute, 
+      signupVerifyRoute,
       signupRoute,
     ],
     debugLogDiagnostics: true,  

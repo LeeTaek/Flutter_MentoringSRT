@@ -31,7 +31,8 @@ class SRTButton extends StatelessWidget {
           style: const TextStyle(
             color: Color(0xFFFFFFFF),
             fontSize: 16, 
-            fontWeight: FontWeight.normal,
+            fontFamily: 'SpoqaHanSansNeo',
+            fontWeight: FontWeight.w400
           ),
         ),
       ),

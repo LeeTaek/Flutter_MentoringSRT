@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'dart:convert';
 
 enum EndPoint { 
-  verify("verity"),
+  verify("verify"),
   signup("signup"),
   logout("logout"),
   login("login"),
@@ -17,16 +17,13 @@ enum EndPoint {
 
 @singleton
 class APIServices { 
-  static const _privateKey = "WGjxqF8b2go9+eZPF7FWbfOrDrsYzrO6KCvQXDkNDaKp2OSl6t9XPWvIPYeYGbglvO2i/GDPxoIgAxjzf9c8lw==";
   static const _baseURL = "http://dpms.openobject.net:4132";
 
  Future<APIResponse<T>> postRequest<T>(EndPoint endPoint, Map<String, dynamic> params, T Function(dynamic) fromJsonT) async { 
   final url = Uri.parse('$_baseURL/${endPoint.url}');
   final header = {"Content-Type": 'application/json'};
-  var parameters = params;
-  parameters["key"] = _privateKey;
-  final body = jsonEncode(parameters);
-
+  final body = jsonEncode(params);
+  debugPrint(url.toString());
   try { 
     var response = await http.post(url, headers: header, body: body);
     if (response.statusCode == 200) { 
