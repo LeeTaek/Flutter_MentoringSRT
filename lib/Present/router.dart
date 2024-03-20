@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_srt/Present/Components/dialog_page.dart';
+import 'package:flutter_srt/Present/Components/popup_page.dart';
 import 'package:flutter_srt/Present/LoginFlow/Login/View/login_view.dart';
 import 'package:flutter_srt/Present/LoginFlow/Login/ViewModel/login_view_model.dart';
 import 'package:flutter_srt/Present/LoginFlow/Signup/Signup/View/signup_view.dart';
@@ -29,7 +32,8 @@ class Router {
     }, 
   ) ;
 
-  final GoRoute signupVerifyRoute = GoRoute(
+GoRoute signupVerifyRoute(List<GoRoute> routes) {
+  return GoRoute(
     path: '/login_signup_verify',
     name:'signup_verify',
     builder:(context, state) {
@@ -39,9 +43,12 @@ class Router {
         child: const SignupVerifyView()
         );
     },
+    routes: routes
   );
+}
 
-  final GoRoute signupRoute = GoRoute(
+ GoRoute signupRoute(List<GoRoute> routes) { 
+  return GoRoute(
     path: '/login_signup',
     name:'signup',
     builder:(context, state) {
@@ -51,18 +58,31 @@ class Router {
         child: const SignupView()
         );
     },
+    routes: routes
   );
+ }
+
+  final GoRoute dialogRoute = GoRoute( 
+    path: 'dialog/:description', 
+    pageBuilder: (BuildContext context, GoRouterState state) { 
+      return CupertinoDialogPage(builder: (_) => PopupPage(description: state.pathParameters["description"]!));
+    }
+  );
+
+
 
   late final routerConfig = GoRouter(
     routes: [
       loginRoute, 
-      signupVerifyRoute,
-      signupRoute,
+      signupVerifyRoute([dialogRoute,]),
+      signupRoute([dialogRoute, ]),
     ],
     debugLogDiagnostics: true,  
     redirect: (context, state) {
       final bool isLoginPath = state.fullPath?.contains('/login') ?? false;
-      if (loginState || isLoginPath) { 
+      final bool isDialogPath = state.matchedLocation.contains('dialog') ;
+
+      if (loginState || isLoginPath || isDialogPath) { 
         return null;
       } else { 
         return '/login';

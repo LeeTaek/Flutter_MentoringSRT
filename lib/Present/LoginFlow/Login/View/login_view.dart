@@ -42,6 +42,7 @@ class LoginView extends StatelessWidget {
                  await viewModel.login();
                 } 
             ),
+            const SizedBox(height: 11),
             Row( 
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

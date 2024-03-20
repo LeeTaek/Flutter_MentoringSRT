@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_srt/Data/Model/login_response.dart';
 import 'package:flutter_srt/Data/Model/signup.dart';
 import 'package:flutter_srt/Data/Services/APIServices.dart';
@@ -16,14 +18,14 @@ class LoginDataSource {
   APIResponse<String?> response = await _services.postRequest(EndPoint.verify, params, (dynamic json) { 
     return json['message'] as String?;
   });
-  return response.message;
+  return _convertUtf8(response.message);
   }
 
   Future<String?> signup(Signup signup) async { 
     final params = { 
       "email": signup.email, 
       "pw": signup.pw,
-      "brith": signup.brith,
+      "birth": signup.birth,
       "name": signup.name
     };
 
@@ -31,10 +33,9 @@ class LoginDataSource {
       EndPoint.signup,
       params, 
       (dynamic json) { 
-        return json['data'] as String?;
+        return json['message'] as String?;
       });
-
-    return response.data;
+    return _convertUtf8(response.message);
   }
 
   Future<String?> login(String email, String pw) async { 
@@ -50,7 +51,7 @@ class LoginDataSource {
         return (json['data'] as LoginResponse);
       });
 
-      return response.data?.name;
+      return _convertUtf8(response.data?.name);
   }
 
 
@@ -66,7 +67,15 @@ class LoginDataSource {
         return json['message'] as String;
       }); 
 
-      return response.message;
+      return _convertUtf8(response.message);
+  }
+
+  String _convertUtf8(String? message) { 
+    if (message != null){
+      List<int> bytes = message.codeUnits;
+      return utf8.decode(bytes);
+    } 
+    return "decoded fail";
   }
 
 }

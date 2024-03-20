@@ -31,9 +31,8 @@ class SignupVerifyView extends StatelessWidget {
                     SignupTextField(
                       title: "아이디", 
                       placeholder: "open@object.net",
-                      isValid: false, 
-                      obscureText: false, 
-                      errorMessage: "",
+                      errorMessage: "이메일 형식이 아닙니다.",
+                      isValid: viewModel.validation[0],
                       controller: viewModel.idTextEditingController
                     ), 
                     const SizedBox(height: 15),
@@ -44,7 +43,7 @@ class SignupVerifyView extends StatelessWidget {
                         height: 48,
                         title: "인증하기", 
                         onPressed: () async { 
-                          await viewModel.getSignupCode();
+                          await viewModel.getSignupCode(context);
                         }
                       ),
                     ),
@@ -52,9 +51,8 @@ class SignupVerifyView extends StatelessWidget {
                     SignupTextField(
                       title: "인증코드", 
                       placeholder: "인증코드",
-                      isValid: false, 
-                      obscureText: true, 
                       errorMessage: "",
+                      isValid: viewModel.validation[1],
                       controller: viewModel.codeTextEdtingController,
                     ), 
                     const SizedBox(height: 15),

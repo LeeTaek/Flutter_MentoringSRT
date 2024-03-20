@@ -4,20 +4,22 @@ import 'package:flutter/cupertino.dart';
 class SignupTextField extends StatefulWidget { 
   final String title; 
   final String placeholder; 
-  final bool isValid;
-  final bool obscureText;
   final String errorMessage;
   final TextEditingController controller;
+  final bool isValid;
+  final bool? obscureText;
+  final int? maxLength;
   bool isTextNotEmpty = false;
 
   SignupTextField({ 
     Key? key,
     required this.title,
     required this.placeholder,
-    required this.isValid,
-    required this.obscureText,
     required this.errorMessage,
     required this.controller,
+    required this.isValid,
+    this.obscureText,
+    this.maxLength,
   }) : super(key: key);
 
   @override 
@@ -26,6 +28,7 @@ class SignupTextField extends StatefulWidget {
 
 class SignupTextFieldState extends State<SignupTextField> { 
   late Text _titleLabel; 
+  late Text _errorLabel;
 
   @override 
   void initState() { 
@@ -42,6 +45,14 @@ class SignupTextFieldState extends State<SignupTextField> {
         fontWeight: FontWeight.w400
       ),
     );
+
+    _errorLabel = Text( 
+      widget.errorMessage,
+      style: const TextStyle( 
+        color: Color.fromARGB(255, 218, 29, 29), 
+        fontSize: 12, 
+      ),
+    );
   }
 
   void _updateTextState() { 
@@ -54,29 +65,34 @@ class SignupTextFieldState extends State<SignupTextField> {
   @override 
   Widget build(BuildContext context) { 
     return SizedBox( 
-      height: 63, 
+      height: 84, 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _titleLabel,
           CupertinoTextField( 
-                controller: widget.controller,
-                placeholder:widget.placeholder,
-                obscureText: widget.obscureText,
-                decoration: const BoxDecoration( 
-                  border: Border(
-                    bottom: BorderSide(color: Color.fromARGB(255, 238, 238, 238)),
+              controller: widget.controller,
+              placeholder:widget.placeholder,
+              obscureText: (widget.obscureText ?? false),
+              decoration: BoxDecoration( 
+                border: Border(
+                  bottom: BorderSide(
+                    color: (widget.isValid) ? const Color.fromARGB(255, 238, 238, 238) 
+                                            : const Color.fromARGB(255, 218, 29, 29)
+                    )
                   )
-                ), 
-                clearButtonMode: widget.isTextNotEmpty ? OverlayVisibilityMode.always : OverlayVisibilityMode.never,
-                suffix: widget.isTextNotEmpty 
-                ? CupertinoButton(
-                  onPressed: () => widget.controller.clear(),
-                  padding: EdgeInsets.zero,
-                  child: Image.asset('assets/images/ico_textfield_clear.png', width: 20, height: 20,),
-                ) : null,
-              )       
-           ],
+              ), 
+              clearButtonMode: widget.isTextNotEmpty ? OverlayVisibilityMode.always : OverlayVisibilityMode.never,
+              suffix: widget.isTextNotEmpty 
+              ? CupertinoButton(
+                onPressed: () => widget.controller.clear(),
+                padding: EdgeInsets.zero,
+                child: Image.asset('assets/images/ico_textfield_clear.png', width: 20, height: 20,),
+              ) : null, 
+              maxLength: widget.maxLength,
+            ), 
+           (widget.isValid) ? const SizedBox(height: 16) : _errorLabel,           
+        ],
       ) 
     );
   }

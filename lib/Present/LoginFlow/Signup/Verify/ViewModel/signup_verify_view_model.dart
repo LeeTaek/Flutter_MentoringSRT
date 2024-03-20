@@ -8,6 +8,8 @@ class SignupVerifyViewModel with ChangeNotifier {
   late final LoginUseCase _loginUseCase;
   final idTextEditingController = TextEditingController();
   final codeTextEdtingController = TextEditingController();
+  final validation = [true, true];
+  var isGetVerifyCode = false;
   SignupVerifyViewModel(this._loginUseCase) : super(); 
 
   void popToLoginView(BuildContext context) { 
@@ -19,14 +21,19 @@ class SignupVerifyViewModel with ChangeNotifier {
   }
 
 
-  Future<void> getSignupCode() async { 
+  Future<void> getSignupCode(BuildContext context) async { 
     final email = idTextEditingController.text;
-    if (email.isEmpty) { 
-      debugPrint("Empty Textfield");
+    if (!_isValidEamil()) { 
+      validation[0] = false;
+      notifyListeners();
     } else {
       final getSignupResult = await _loginUseCase.getSignupcode(email);
       if (getSignupResult == 'SUCCESS') { 
-        
+        validation[0] = true;
+        isGetVerifyCode = true;
+        notifyListeners();
+      } else if (context.mounted){ 
+        GoRouter.of(context).go('/dialog');
       }
       debugPrint(getSignupResult);
     }
@@ -40,8 +47,14 @@ class SignupVerifyViewModel with ChangeNotifier {
       final verifyResult = await _loginUseCase.getVerify(code);
       if (verifyResult == 'SUCCESS' && context.mounted) { 
         pushToSignupView(context);
-      } 
+      } else if (context.mounted){ 
+        context.go('/login_signup_verify/dialog/$verifyResult');
+      }
     }
   }
 
+  bool _isValidEamil() { 
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(idTextEditingController.text);
+  }
 }

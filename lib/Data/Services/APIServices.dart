@@ -44,6 +44,7 @@ class APIServices {
 
   try { 
     var response = await http.get(url);
+    debugPrint("response: $response");
     if (response.statusCode == 200) { 
       var jsonResponse = json.decode(response.body);
       return APIResponse.fromJson(jsonResponse, fromJsonT);
