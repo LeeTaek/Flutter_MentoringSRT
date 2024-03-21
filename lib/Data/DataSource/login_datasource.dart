@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_srt/Data/Model/login_response.dart';
 import 'package:flutter_srt/Data/Model/signup.dart';
 import 'package:flutter_srt/Data/Services/APIServices.dart';
@@ -33,7 +34,7 @@ class LoginDataSource {
       EndPoint.signup,
       params, 
       (dynamic json) { 
-        return json['message'] as String?;
+        return json['data'] as String?;
       });
     return _convertUtf8(response.message);
   }
@@ -44,14 +45,18 @@ class LoginDataSource {
       "pw": pw
     };
 
-    APIResponse<LoginResponse> response = await _services.postRequest(
+    APIResponse<String> response = await _services.postRequest(
       EndPoint.login,
       params, 
       (dynamic json) { 
-        return (json['data'] as LoginResponse);
+        if (json['message'] != null) {
+          return (json['message'] as String);
+        } else {
+          return 'failed login'; 
+        }
       });
-
-      return _convertUtf8(response.data?.name);
+      debugPrint(response.toString());
+      return _convertUtf8(response.message);
   }
 
 

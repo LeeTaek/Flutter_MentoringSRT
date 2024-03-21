@@ -28,9 +28,10 @@ class LoginView extends StatelessWidget {
               child: Image.asset('assets/images/srtLogo.png', width: 200, height: 49,),
               ), 
             LoginTextField(
-              onTextChanged: (id, password) {
-                viewModel.id = id;
-                viewModel.password = password;
+              idTextEditingController: viewModel.idTextEditingController,
+              pwTextEditingController: viewModel.pwTextEditingController,
+              onTextChanged: (id, pw) {
+                viewModel.isEnableButton(id, pw);
               },
             ),
             const SizedBox(height: 11),
@@ -38,8 +39,9 @@ class LoginView extends StatelessWidget {
               width: double.infinity,
               height: 48,
               title: "로그인",
+              enable: viewModel.isEnableLoginButton,
               onPressed: () async {
-                 await viewModel.login();
+                 await viewModel.login(context);
                 } 
             ),
             const SizedBox(height: 11),
@@ -75,24 +77,28 @@ class LoginView extends StatelessWidget {
 }
 
 class LoginTextField extends StatefulWidget { 
-  const LoginTextField({Key? key, required this.onTextChanged}) : super(key: key);
-
+  final TextEditingController idTextEditingController;
+  final TextEditingController pwTextEditingController;
   final void Function(String id, String password) onTextChanged; 
+
+  const LoginTextField({
+    Key? key, 
+    required this.idTextEditingController,
+    required this.pwTextEditingController,
+    required this.onTextChanged
+  }) : super(key: key);
 
   @override 
   LoginTextFieldState createState() => LoginTextFieldState();
 }
 
 class LoginTextFieldState extends State<LoginTextField> { 
-  final _idTextEditController = TextEditingController();
-  final _passwordTextEditingController = TextEditingController();
-
   @override 
   Widget build(BuildContext context) { 
     var idTextField = SizedBox( 
         height: 62,
         child: CupertinoTextField(
-        controller: _idTextEditController,
+        controller: widget.idTextEditingController,
         placeholder: "ID",
         decoration: BoxDecoration( 
           color: Colors.white,
@@ -103,7 +109,7 @@ class LoginTextFieldState extends State<LoginTextField> {
           ), 
         ),
         onChanged: (text) { 
-          widget.onTextChanged(text, _passwordTextEditingController.text);
+          widget.onTextChanged(text, widget.pwTextEditingController.text);
         },
       ),
     );
@@ -111,7 +117,7 @@ class LoginTextFieldState extends State<LoginTextField> {
    var pwTextField = SizedBox( 
       height: 62, 
       child: CupertinoTextField(
-        controller: _passwordTextEditingController,
+        controller: widget.pwTextEditingController,
         placeholder: "PW",
         obscureText: true,
         decoration: BoxDecoration( 
@@ -123,7 +129,7 @@ class LoginTextFieldState extends State<LoginTextField> {
           ), 
         ),
         onChanged: (text) { 
-          widget.onTextChanged(_idTextEditController.text, text);
+          widget.onTextChanged(widget.idTextEditingController.text, text);
         },
       ),
     );
@@ -140,8 +146,8 @@ class LoginTextFieldState extends State<LoginTextField> {
 
   @override 
   void dispose() { 
-    _idTextEditController.dispose();
-    _passwordTextEditingController.dispose();
+    widget.idTextEditingController.dispose();
+    widget.pwTextEditingController.dispose();
     super.dispose();
   }
 }

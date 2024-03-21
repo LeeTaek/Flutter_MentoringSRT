@@ -4,15 +4,17 @@ class SRTButton extends StatelessWidget {
   final double width;
   final double height;
   final String title; 
-  final VoidCallback onPressed; 
+  final VoidCallback onPressed;
+  bool? enable; 
   
 
- const SRTButton({
+ SRTButton({
     Key? key, 
     required this.width,
     required this.height, 
     required this.title,
     required this.onPressed,
+    this.enable,
   }) : super(key: key);
 
   @override 
@@ -23,7 +25,7 @@ class SRTButton extends StatelessWidget {
       child: CupertinoButton(
         minSize: 0.0,
         padding: const EdgeInsets.all(0),
-        onPressed: onPressed, 
+        onPressed: (enable ?? true) ? onPressed : null, 
         color: const Color(0xFF476EFF),
         borderRadius: BorderRadius.circular(4),
         child: Text(

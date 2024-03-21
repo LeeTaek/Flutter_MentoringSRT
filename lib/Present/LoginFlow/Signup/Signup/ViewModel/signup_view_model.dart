@@ -20,6 +20,10 @@ class SignupViewModel with ChangeNotifier {
     GoRouter.of(context).go('/login');
   }
 
+  void presentPopup(BuildContext context, String description) { 
+    GoRouter.of(context).push('/login_signup/${idTextEditingController.text}/dialog/$description');
+  }
+
   Future<void> signup(BuildContext context) async { 
     if (validation.reduce((value, element) => value && element)) { 
       final signup = Signup(
@@ -33,7 +37,7 @@ class SignupViewModel with ChangeNotifier {
       if (signupResult == 'SUCCESS' && context.mounted) { 
         popToLoginView(context);
       } else if (context.mounted) { 
-        context.push('/login_signup/${idTextEditingController.text}/dialog/$signupResult');
+        presentPopup(context, signupResult ?? "");
       }
     } else { 
       debugPrint("validation fali: $validation");
