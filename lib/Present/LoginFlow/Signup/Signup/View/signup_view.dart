@@ -38,7 +38,8 @@ class SignupView extends StatelessWidget {
                           placeholder: "open1404@openobject.net",
                           errorMessage: "이메일 형식에 맞지 않습니다.",
                           isValid: viewModel.validation[0], 
-                          controller: viewModel.idTextEditingController
+                          controller: viewModel.idTextEditingController,
+                          enabled: false
                         ),
                         const SizedBox(height: 24),
                         SignupTextField(
@@ -55,23 +56,29 @@ class SignupView extends StatelessWidget {
                           errorMessage: "생년월일 형식에 맞지 않습니다.", 
                           isValid: viewModel.validation[2],
                           controller: viewModel.brithTextEditingController,
-                          maxLength: 8,
+                          maxLength: 6,
+                          textInputType: TextInputType.number,
+                          validation: viewModel.isValidBrith,
                         ),
                         const SizedBox(height: 24),
                         SignupTextField(
                           title: "비밀번호",
                           placeholder: "영문·숫자 조합 8자리 이상",
                           errorMessage: "비밀번호는 8자리 이상입니다.", 
+                          obscureText: true,
                           isValid: viewModel.validation[3],
-                          controller: viewModel.pwTextEditingController
+                          controller: viewModel.pwTextEditingController,
+                          validation: viewModel.isValidPW,
                         ),
                         const SizedBox(height: 24),
                         SignupTextField(
                           title: "비밀번호 확인",
                           placeholder: "영문·숫자 조합 8자리 이상",
                           errorMessage: "비밀번호가 일치하지 않습니다.", 
+                          obscureText: true,
                           isValid: viewModel.validation[4],
-                          controller: viewModel.rePwTextEditingController
+                          controller: viewModel.rePwTextEditingController,
+                          validation: viewModel.isValideRePw,
                         ),
                       ]
                     ),

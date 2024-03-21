@@ -21,12 +21,6 @@ class SignupViewModel with ChangeNotifier {
   }
 
   Future<void> signup(BuildContext context) async { 
-    validation[0] = isValidEamil();
-    validation[2] = isValidBrith();
-    validation[3] = isValidPW();
-    validation[4] = isValidPW();
-    notifyListeners();
-
     if (validation.reduce((value, element) => value && element)) { 
       final signup = Signup(
         email: idTextEditingController.text,
@@ -37,33 +31,37 @@ class SignupViewModel with ChangeNotifier {
       debugPrint(signup.birth);
       final signupResult = await _loginUseCase.signup(signup);
       if (signupResult == 'SUCCESS' && context.mounted) { 
-        debugPrint("success $signupResult");
         popToLoginView(context);
-      } else { 
-        debugPrint("fail $signupResult");
+      } else if (context.mounted) { 
+        context.push('/login_signup/${idTextEditingController.text}/dialog/$signupResult');
       }
     } else { 
       debugPrint("validation fali: $validation");
     }
   }
 
-  bool isValidEamil() { 
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    return emailRegex.hasMatch(idTextEditingController.text);
+  void isValidBrith() { 
+    final birthRegex = RegExp(r'^\d{6}$|^$');
+    validation[2] = birthRegex.hasMatch(brithTextEditingController.text);
+    notifyListeners();
   }
 
-  bool isValidBrith() { 
-    final birthRegex = RegExp(r'^\d{6}$');
-    return birthRegex.hasMatch(brithTextEditingController.text);
+  void isValidPW() { 
+    final passwordRegex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$|^$');
+    validation[3] = passwordRegex.hasMatch(pwTextEditingController.text);
+    notifyListeners();
   }
 
-  bool isValidPW() { 
-    final passwordRegex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
-    if (pwTextEditingController.text == rePwTextEditingController.text) { 
-      return passwordRegex.hasMatch(pwTextEditingController.text);
+  void isValideRePw() { 
+    final passwordRegex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$|^$');
+    if (rePwTextEditingController.text.isEmpty) { 
+      validation[4] == true;
+    } else if (pwTextEditingController.text == rePwTextEditingController.text) { 
+      validation[4] = passwordRegex.hasMatch(pwTextEditingController.text);
     } else { 
-      return false;
+      validation[4] = false;
     }
+    notifyListeners();
   }
 
   String _convertYear(String date) { 

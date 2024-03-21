@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 
 class PopupPage extends StatelessWidget { 
   final String description;
@@ -46,7 +47,7 @@ class PopupPage extends StatelessWidget {
               ),
               CupertinoButton(
                 onPressed: () { 
-                  Navigator.pop(context);
+                  Navigator.of(context).pop();
                 },
                 child: const Text(
                   "확인",

@@ -16,10 +16,13 @@ class SignupVerifyViewModel with ChangeNotifier {
     GoRouter.of(context).go('/login');
   }
 
-  void pushToSignupView(BuildContext context) { 
-    GoRouter.of(context).push('/login_signup');
+  void pushToSignupView(BuildContext context, String email) { 
+    GoRouter.of(context).push('/login_signup/$email');
   }
 
+  void presentPopup(BuildContext context, String description) { 
+    GoRouter.of(context).push('/login_signup_verify/dialog/$description');
+  }
 
   Future<void> getSignupCode(BuildContext context) async { 
     final email = idTextEditingController.text;
@@ -33,7 +36,7 @@ class SignupVerifyViewModel with ChangeNotifier {
         isGetVerifyCode = true;
         notifyListeners();
       } else if (context.mounted){ 
-        GoRouter.of(context).go('/dialog');
+        presentPopup(context, (getSignupResult ?? ""));
       }
       debugPrint(getSignupResult);
     }
@@ -46,9 +49,9 @@ class SignupVerifyViewModel with ChangeNotifier {
     } else {
       final verifyResult = await _loginUseCase.getVerify(code);
       if (verifyResult == 'SUCCESS' && context.mounted) { 
-        pushToSignupView(context);
+        pushToSignupView(context, idTextEditingController.text);
       } else if (context.mounted){ 
-        context.go('/login_signup_verify/dialog/$verifyResult');
+        presentPopup(context, (verifyResult ?? ""));
       }
     }
   }

@@ -49,10 +49,11 @@ GoRoute signupVerifyRoute(List<GoRoute> routes) {
 
  GoRoute signupRoute(List<GoRoute> routes) { 
   return GoRoute(
-    path: '/login_signup',
+    path: '/login_signup/:email',
     name:'signup',
     builder:(context, state) {
       final viewModel = getIt<SignupViewModel>();
+      viewModel.idTextEditingController.text = state.pathParameters["email"]!;
       return ChangeNotifierProvider(
         create: (context) => viewModel,
         child: const SignupView()

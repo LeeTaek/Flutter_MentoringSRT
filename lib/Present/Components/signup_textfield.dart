@@ -10,6 +10,9 @@ class SignupTextField extends StatefulWidget {
   final bool? obscureText;
   final int? maxLength;
   bool isTextNotEmpty = false;
+  bool? enabled;
+  TextInputType? textInputType;
+  VoidCallback? validation;
 
   SignupTextField({ 
     Key? key,
@@ -20,6 +23,9 @@ class SignupTextField extends StatefulWidget {
     required this.isValid,
     this.obscureText,
     this.maxLength,
+    this.enabled,
+    this.textInputType,
+    this.validation,
   }) : super(key: key);
 
   @override 
@@ -29,6 +35,7 @@ class SignupTextField extends StatefulWidget {
 class SignupTextFieldState extends State<SignupTextField> { 
   late Text _titleLabel; 
   late Text _errorLabel;
+  final focusNode = FocusNode();
 
   @override 
   void initState() { 
@@ -53,6 +60,10 @@ class SignupTextFieldState extends State<SignupTextField> {
         fontSize: 12, 
       ),
     );
+
+    if (widget.validation != null)  { 
+      focusNode.addListener(widget.validation!);
+    }
   }
 
   void _updateTextState() { 
@@ -71,9 +82,12 @@ class SignupTextFieldState extends State<SignupTextField> {
         children: [
           _titleLabel,
           CupertinoTextField( 
+              focusNode: focusNode,
               controller: widget.controller,
               placeholder:widget.placeholder,
               obscureText: (widget.obscureText ?? false),
+              enabled: (widget.enabled ?? true),
+              keyboardType: widget.textInputType,
               decoration: BoxDecoration( 
                 border: Border(
                   bottom: BorderSide(
@@ -100,6 +114,7 @@ class SignupTextFieldState extends State<SignupTextField> {
   @override 
   void dispose() { 
     widget.controller.dispose();
+    focusNode.dispose();
     super.dispose();
   }
 }

@@ -33,7 +33,8 @@ class SignupVerifyView extends StatelessWidget {
                       placeholder: "open@object.net",
                       errorMessage: "이메일 형식이 아닙니다.",
                       isValid: viewModel.validation[0],
-                      controller: viewModel.idTextEditingController
+                      controller: viewModel.idTextEditingController,
+                      enabled: !viewModel.isGetVerifyCode 
                     ), 
                     const SizedBox(height: 15),
                     Align( 
@@ -48,15 +49,15 @@ class SignupVerifyView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    SignupTextField(
-                      title: "인증코드", 
-                      placeholder: "인증코드",
-                      errorMessage: "",
-                      isValid: viewModel.validation[1],
-                      controller: viewModel.codeTextEdtingController,
-                    ), 
+                    if (viewModel.isGetVerifyCode) SignupTextField(
+                        title: "인증코드", 
+                        placeholder: "인증코드",
+                        errorMessage: "",
+                        isValid: viewModel.validation[1],
+                        controller: viewModel.codeTextEdtingController,
+                      ), 
                     const SizedBox(height: 15),
-                    Align( 
+                    if (viewModel.isGetVerifyCode) Align( 
                       alignment: Alignment.centerRight,
                       child: SRTButton(
                         width: 150, 
