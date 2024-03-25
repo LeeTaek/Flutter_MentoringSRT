@@ -1,12 +1,13 @@
+
+import 'package:flutter_srt/Data/Model/home_data.dart';
+
 class ReservationInfo {
   final String boardingDate;
   final int ticketCnt;
   final int trainNo;
-  final String depPlaceId;
-  final String depPlaceName;
+  final Station depStation;
+  final Station arrStation;
   final String depPlandTime;
-  final String arrPlaceId;
-  final String arrPlaceName;
   final String arrPlandTime;
   final int price;
 
@@ -14,11 +15,9 @@ class ReservationInfo {
     required this.boardingDate,
     required this.ticketCnt,
     required this.trainNo,
-    required this.depPlaceId,
-    required this.depPlaceName,
+    required this.depStation,
+    required this.arrStation,
     required this.depPlandTime,
-    required this.arrPlaceId,
-    required this.arrPlaceName,
     required this.arrPlandTime,
     required this.price,
   });
@@ -28,26 +27,22 @@ class ReservationInfo {
       boardingDate: json['boardingDate'],
       ticketCnt: json['ticketCnt'],
       trainNo: json['trainNo'],
-      depPlaceId: json['depPlaceId'],
-      depPlaceName: json['depPlaceName'],
+      depStation: Station.fromJson(json['depPlace']),
+      arrStation: Station.fromJson(json['arrPlace']),
       depPlandTime: json['depPlandTime'],
-      arrPlaceId: json['arrPlaceId'],
-      arrPlaceName: json['arrPlaceName'],
       arrPlandTime: json['arrPlandTime'],
       price: json['price'],
     );
   }
 
-   Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'boardingDate': boardingDate,
       'ticketCnt': ticketCnt,
       'trainNo': trainNo,
-      'depPlaceId': depPlaceId,
-      'depPlaceName': depPlaceName,
+      'depPlace': depStation.toJson(),
+      'arrPlace': arrStation.toJson(),
       'depPlandTime': depPlandTime,
-      'arrPlaceId': arrPlaceId,
-      'arrPlaceName': arrPlaceName,
       'arrPlandTime': arrPlandTime,
       'price': price,
     };

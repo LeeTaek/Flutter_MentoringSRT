@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_srt/Present/Components/dialog_page.dart';
 import 'package:flutter_srt/Present/Components/popup_page.dart';
 import 'package:flutter_srt/Present/LoginFlow/Login/View/login_view.dart';
@@ -68,20 +69,46 @@ class Router {
     );
   }
 
-  GoRoute ticketingHome(List<GoRoute> routes) { 
-    return GoRoute( 
-      path: '/ticketing/home',
-      name: 'home',
-      builder: (context, state) { 
-        final viewModel = getIt<HomeViewModel>();
-        return ChangeNotifierProvider(
-          create: (context) => viewModel, 
-          child: const HomeView()
-        );
-      },
-      routes: routes,
-    );
-  }
+  // GoRoute ticketingHome(List<GoRoute> routes) { 
+  //   return GoRoute( 
+  //     path: '/ticketing/home',
+  //     name: 'home',
+  //     builder: (context, state)  { 
+  //       final viewModel = await getIt.getAsync<HomeViewModel>();
+  //       return ChangeNotifierProvider(
+  //         create: (context) => viewModel, 
+  //         child: const HomeView()
+  //       );
+  //     },
+  //     routes: routes,
+  //   );
+  // }
+
+  GoRoute ticketingHome(List<GoRoute> routes) {
+  return GoRoute(
+    path: '/ticketing/home',
+    name: 'home',
+    builder: (context, state) {
+      return FutureBuilder<HomeViewModel>(
+        future: getIt.getAsync<HomeViewModel>(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator(); // 데이터 로딩 중에는 로딩 인디케이터를 표시합니다.
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}'); // 에러가 발생한 경우 에러 메시지를 표시합니다.
+          } else {
+            // 데이터를 성공적으로 불러왔을 경우 HomeView를 생성합니다.
+            return ChangeNotifierProvider<HomeViewModel>.value(
+              value: snapshot.data!,
+              child: const HomeView(),
+            );
+          }
+        },
+      );
+    },
+    routes: routes,
+  );
+}
 
   final GoRoute dialogRoute = GoRoute( 
     path: 'dialog/:description', 
@@ -106,7 +133,8 @@ class Router {
       if (loginState || isLoginPath || isDialogPath || ticketing) { 
         return null;
       } else { 
-        return '/login';
+        // return '/login';
+        return '/ticketing/home';
       }
     },
   );

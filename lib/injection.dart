@@ -31,5 +31,5 @@ void configureDependencies() {
   ..registerFactory<TicketDataSource>(() => TicketDataSource())
   ..registerFactory<TicketRepository>(() => TicketRepositoryImpl(getIt<TicketDataSource>()))
   ..registerFactory<TicketUseCase>(() => TicketUseCase(getIt<TicketRepository>()))
-  ..registerFactory<HomeViewModel>(() => HomeViewModel(getIt<TicketUseCase>()));
+  ..registerFactoryAsync<HomeViewModel>(() => HomeViewModel.init(getIt<TicketUseCase>()));
 }

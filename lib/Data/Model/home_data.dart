@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class HomeData {
   final List<RecentReservation> recentReservationList;
   final List<BannerItem> bannerList;
@@ -26,25 +28,43 @@ class HomeData {
   }
 }
 
+class Station {
+  final String stationName;
+  final String stationID;
+
+  Station({
+    required this.stationName,
+    required this.stationID,
+  });
+
+  factory Station.fromJson(Map<String, dynamic> json) {
+    return Station(
+      stationName: json['stationName'],
+      stationID: json['stationID'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'stationName': stationName,
+      'stationID': stationID,
+    };
+  }
+}
+
 class RecentReservation {
-  final String depPlaceId;
-  final String depPlaceName;
-  final String arrPlaceId;
-  final String arrPlaceName;
+  final Station depStation;
+  final Station arrStation;
 
   RecentReservation({
-    required this.depPlaceId,
-    required this.depPlaceName,
-    required this.arrPlaceId,
-    required this.arrPlaceName,
+    required this.depStation,
+    required this.arrStation,
   });
 
   factory RecentReservation.fromJson(Map<String, dynamic> json) {
     return RecentReservation(
-      depPlaceId: json['depPlaceId'],
-      depPlaceName: json['depPlaceName'],
-      arrPlaceId: json['arrPlaceId'],
-      arrPlaceName: json['arrPlaceName'],
+      depStation: Station.fromJson(json['depPlace']),
+      arrStation: Station.fromJson(json['arrPlace']),
     );
   }
 }
@@ -77,8 +97,16 @@ class Notice {
 
   factory Notice.fromJson(Map<String, dynamic> json) {
     return Notice(
-      title: json['title'],
+      title: _convertUtf8(json['title']),
       linkUrl: json['linkUrl'],
     );
   }
 }
+
+  String _convertUtf8(String? message) { 
+    if (message != null){
+      List<int> bytes = message.codeUnits;
+      return utf8.decode(bytes);
+    } 
+    return "decoded fail";
+  }

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class SRTButton extends StatelessWidget { 
-  final double width;
+  double width;
   final double height;
   final String title; 
   final VoidCallback onPressed;
@@ -10,7 +10,7 @@ class SRTButton extends StatelessWidget {
 
  SRTButton({
     Key? key, 
-    required this.width,
+    this.width = double.infinity,
     required this.height, 
     required this.title,
     required this.onPressed,

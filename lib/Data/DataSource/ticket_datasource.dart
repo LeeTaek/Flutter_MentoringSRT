@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_srt/Data/Model/APIResponse.dart';
 import 'package:flutter_srt/Data/Model/device_info.dart';
 import 'package:flutter_srt/Data/Model/home_data.dart';
