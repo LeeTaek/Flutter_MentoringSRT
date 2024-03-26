@@ -69,21 +69,6 @@ class Router {
     );
   }
 
-  // GoRoute ticketingHome(List<GoRoute> routes) { 
-  //   return GoRoute( 
-  //     path: '/ticketing/home',
-  //     name: 'home',
-  //     builder: (context, state)  { 
-  //       final viewModel = await getIt.getAsync<HomeViewModel>();
-  //       return ChangeNotifierProvider(
-  //         create: (context) => viewModel, 
-  //         child: const HomeView()
-  //       );
-  //     },
-  //     routes: routes,
-  //   );
-  // }
-
   GoRoute ticketingHome(List<GoRoute> routes) {
   return GoRoute(
     path: '/ticketing/home',
@@ -93,11 +78,10 @@ class Router {
         future: getIt.getAsync<HomeViewModel>(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator(); // 데이터 로딩 중에는 로딩 인디케이터를 표시합니다.
+            return const CircularProgressIndicator(); 
           } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}'); // 에러가 발생한 경우 에러 메시지를 표시합니다.
+            return Text('Error: ${snapshot.error}'); 
           } else {
-            // 데이터를 성공적으로 불러왔을 경우 HomeView를 생성합니다.
             return ChangeNotifierProvider<HomeViewModel>.value(
               value: snapshot.data!,
               child: const HomeView(),
