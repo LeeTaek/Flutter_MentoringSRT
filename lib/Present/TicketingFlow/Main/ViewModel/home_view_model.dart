@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_srt/Data/Model/home_data.dart';
 import 'package:flutter_srt/Domain/UseCase/ticket_usecase.dart';
+import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -31,8 +32,8 @@ class HomeViewModel with ChangeNotifier {
     return viewModel;
   }
 
-  void pushToAlarm(BuildContext context) { 
-
+  void pushToPushList(BuildContext context) { 
+    GoRouter.of(context).push('/ticketing/home/pushList');
   }
 
   void pushToMyTicket(BuildContext context) { 
@@ -67,7 +68,7 @@ class HomeViewModel with ChangeNotifier {
   }
 
   void pushToTermsUseServiceWeb() { 
-    
+
   }
 
 }

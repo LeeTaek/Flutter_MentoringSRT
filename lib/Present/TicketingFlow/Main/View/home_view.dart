@@ -1,5 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_srt/Present/Components/notosans_text.dart';
 import 'package:flutter_srt/Present/Components/srt_button.dart';
 import 'package:flutter_srt/Present/TicketingFlow/Main/Component/banner_swiper_controller.dart';
 import 'package:flutter_srt/Present/TicketingFlow/Main/Component/recent_booking_view.dart';
@@ -29,14 +30,14 @@ class HomeView extends StatelessWidget {
                     children: [
                       CupertinoButton(
                         child: Image.asset('assets/images/img_main_logo.png', width: 135.04, height: 22,), 
-                        onPressed: () => viewModel.pushToAlarm(context)
+                        onPressed: () => viewModel.pushToPushList(context)
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           CupertinoButton(
                             child: Image.asset('assets/images/alarm.png', width: 60, height: 60,), 
-                            onPressed: () => viewModel.pushToAlarm(context)
+                            onPressed: () => viewModel.pushToPushList(context)
                           ) ,
                           CupertinoButton(
                             child: Image.asset('assets/images/my_ticket.png', width: 60, height: 60,), 
@@ -73,25 +74,15 @@ class HomeView extends StatelessWidget {
                       child: Row( 
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text( 
-                            "날짜", 
-                            style: TextStyle( 
-                              color: Color.fromARGB(255, 136, 136, 136),
-                              fontSize: 16, 
-                              fontFamily: 'SpoqaHanSansNeo',
-                              fontWeight: FontWeight.w300   
-                            ),
+                          NotoSansText( 
+                            text: "날짜", 
+                            color: const Color.fromARGB(255, 136, 136, 136),
+                            size: 16, 
                           ), 
                           CupertinoButton(
                             onPressed: () => viewModel.setBookingDate,
-                            child: Text( 
-                              "${viewModel.bookingTimeString} 이후", 
-                              style: const TextStyle( 
-                                color: Color.fromARGB(255, 0, 0, 0),
-                                fontSize: 16, 
-                                fontFamily: 'SpoqaHanSansNeo',
-                                fontWeight: FontWeight.w300    
-                              ),
+                            child: NotoSansText( 
+                              text: "${viewModel.bookingTimeString} 이후", 
                             ),
                           ) 
                         ]
@@ -114,25 +105,14 @@ class HomeView extends StatelessWidget {
                       child: Row( 
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text( 
-                            "인원 수", 
-                            style: TextStyle( 
-                              color: Color.fromARGB(255, 136, 136, 136),
-                              fontSize: 16, 
-                              fontFamily: 'SpoqaHanSansNeo',
-                              fontWeight: FontWeight.w300   
-                            ),
+                          NotoSansText( 
+                            text: "인원 수", 
+                            color: const Color.fromARGB(255, 136, 136, 136), 
                           ), 
                           CupertinoButton(
                             onPressed: () => viewModel.setPeopleCount(),
-                            child: Text( 
-                              "총 ${viewModel.peopleCount}명", 
-                              style: const TextStyle( 
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                fontSize: 16, 
-                                fontFamily: 'SpoqaHanSansNeo',
-                                fontWeight: FontWeight.w300    
-                              ),
+                            child: NotoSansText( 
+                              text: "총 ${viewModel.peopleCount}명", 
                             ),
                           ) 
                         ]
@@ -158,14 +138,10 @@ class HomeView extends StatelessWidget {
                           Image.asset('assets/images/bell.png', width: 20, height: 20,),
                           const SizedBox(width: 8,),
                           Expanded(
-                            child: Text( 
-                              viewModel.homeData?.noticeList.first.title ?? "", 
-                              style: const TextStyle( 
-                                color: Color.fromARGB(255, 0, 0, 0),
-                                fontSize: 14, 
-                                fontFamily: 'SpoqaHanSansNeo',
-                                fontWeight: FontWeight.w400     
-                              )
+                            child: NotoSansText( 
+                              text: viewModel.homeData?.noticeList.first.title ?? "", 
+                              size: 14, 
+                              fontWeight: NotoSansFontWeight.medium
                             )
                           ),
                           const SizedBox(width: 8,),
@@ -221,15 +197,11 @@ class HomeView extends StatelessWidget {
                     onPressed: viewModel.pushToTermsUseServiceWeb,
                     child:  Container( 
                       alignment: Alignment.center,
-                      child: const Text( 
-                        "예매 서비스 이용약관",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 102, 102, 102),
-                          fontSize: 12, 
-                          fontFamily: 'SpoqaHanSansNeo',
-                          fontWeight: FontWeight.w300,    
-                          decoration: TextDecoration.underline
-                        )
+                      child: NotoSansText( 
+                        text: "예매 서비스 이용약관",
+                        color: const Color.fromARGB(255, 102, 102, 102),
+                        size: 12, 
+                        decoration: TextDecoration.underline
                       )
                     ),
                   ),
@@ -240,16 +212,12 @@ class HomeView extends StatelessWidget {
               alignment: Alignment.center,
               height: 82,
               color: const Color.fromARGB(255, 248, 248, 248),
-              child: const Padding( 
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 24),
-                child: Text( 
-                  '통신판매중개자로, 통신판매의 당사자가 아닙니다.\n예매 및 환불 등 거래에 대한 의무와 책임은 거래당사자인\n한국철도공사에 있습니다.',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 136, 136, 136),
-                    fontSize: 11, 
-                    fontFamily: 'SpoqaHanSansNeo',
-                    fontWeight: FontWeight.w300,                     
-                  ),
+              child:  Padding( 
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+                child: NotoSansText( 
+                  text: '통신판매중개자로, 통신판매의 당사자가 아닙니다.\n예매 및 환불 등 거래에 대한 의무와 책임은 거래당사자인\n한국철도공사에 있습니다.',
+                  color: const Color.fromARGB(255, 136, 136, 136),
+                  size: 11, 
                   textAlign: TextAlign.center,
                 )
               ),

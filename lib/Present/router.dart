@@ -10,6 +10,8 @@ import 'package:flutter_srt/Present/LoginFlow/Signup/Verify/View/signup_verify_v
 import 'package:flutter_srt/Present/LoginFlow/Signup/Verify/ViewModel/signup_verify_view_model.dart';
 import 'package:flutter_srt/Present/TicketingFlow/Main/View/home_view.dart';
 import 'package:flutter_srt/Present/TicketingFlow/Main/ViewModel/home_view_model.dart';
+import 'package:flutter_srt/Present/TicketingFlow/PushList/View/push_list_view.dart';
+import 'package:flutter_srt/Present/TicketingFlow/PushList/ViewModel/push_list_view_model.dart';
 import 'package:flutter_srt/injection.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
@@ -101,12 +103,24 @@ class Router {
     }
   );
 
+  final GoRoute pushListRoute = GoRoute(
+    path: 'pushList',
+    name: 'pushList', 
+    builder: (context, state) { 
+      final viewModel = getIt<PushListViewModel>(); 
+      return ChangeNotifierProvider(
+        create: (context) => viewModel, 
+        child: const PushListView()
+        );
+      }
+    );
+
   late final routerConfig = GoRouter(
     routes: [
       loginRoute([dialogRoute,]), 
       signupVerifyRoute([dialogRoute,]),
       signupRoute([dialogRoute, ]),
-      ticketingHome([dialogRoute, ])
+      ticketingHome([dialogRoute, pushListRoute])
     ],
     debugLogDiagnostics: true,  
     redirect: (context, state) {

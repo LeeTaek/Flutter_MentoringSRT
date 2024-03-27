@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_srt/Present/Components/notosans_text.dart';
 import 'package:flutter_srt/Present/Components/srt_button.dart';
 import 'package:flutter_srt/Present/LoginFlow/Login/ViewModel/login_view_model.dart';
 import 'package:provider/provider.dart';
@@ -58,15 +59,13 @@ class LoginView extends StatelessWidget {
                 onPressed: () {
                   viewModel.moveToSignup(context);
                 },
-                child: const Text(
-                  '회원가입',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 102, 102, 102),
-                    decoration: TextDecoration.underline,
-                    fontSize: 17.0,
-                    ), 
+                child: NotoSansText(
+                  text: '회원가입',
+                  color: const Color.fromARGB(255, 102, 102, 102),
+                  decoration: TextDecoration.underline,
+                  size: 17.0,
+                  ), 
                 ),
-              ),
               ]
             ),
           ],
@@ -171,12 +170,10 @@ class SavedIDToggleButton extends StatelessWidget {
                 ? Image.asset('assets/images/ico_login_checked_y.png', width: 27, height: 27,)
                 : Image.asset('assets/images/ico_login_checked_n.png', width: 27, height: 27,),
           ),
-          const Text(
-            "아이디 저장",
-            style: TextStyle(
-              color: Color.fromARGB(255, 136, 136, 136),
-              fontSize: 12.0,
-            ),
+          NotoSansText(
+            text: "아이디 저장",
+            color: const Color.fromARGB(255, 136, 136, 136),
+            size: 12.0,
           ),
         ],
       ),

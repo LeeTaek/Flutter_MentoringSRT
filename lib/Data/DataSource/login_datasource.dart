@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_srt/Data/Model/login_response.dart';
 import 'package:flutter_srt/Data/Model/signup.dart';
 import 'package:flutter_srt/Data/Services/APIServices.dart';
 import 'package:flutter_srt/Data/Model/APIResponse.dart';

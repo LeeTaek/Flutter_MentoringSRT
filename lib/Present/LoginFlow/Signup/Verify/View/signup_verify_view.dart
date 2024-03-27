@@ -19,6 +19,7 @@ class SignupVerifyView extends StatelessWidget {
               NavigationBar(
                 title: "회원가입", 
                 trailingButton: CupertinoButton( 
+                  padding: const EdgeInsets.all(0),
                   child: Image.asset('assets/images/navi_close_button.png', width: 24, height: 24,),
                   onPressed: () => viewModel.popToLoginView(context)
                 ),

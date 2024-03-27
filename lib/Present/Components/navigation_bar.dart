@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_srt/Present/Components/notosans_text.dart';
 
 class NavigationBar extends StatelessWidget { 
    final String title;
@@ -23,22 +24,27 @@ class NavigationBar extends StatelessWidget {
         child: Row ( 
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [ 
-            (leadingButton != null) ? leadingButton! : const SizedBox(width: 24),
+            SizedBox( 
+              width: 24,
+              height: 24,
+              child: (leadingButton != null) ? leadingButton! : const SizedBox(width: 24, height: 24,),
+            ),
             Expanded( 
-              child: Text(
-                title, 
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'SpoqaHanSansNeo',
-                  fontWeight: FontWeight.w500
-                ),
+              child: NotoSansText(
+                text: title, 
+                size: 18,
+                fontWeight: NotoSansFontWeight.bold,
                 textAlign: TextAlign.center,
               ),
             ),
-            (trailingButton != null) ? trailingButton! : const SizedBox(width: 24)
+            SizedBox( 
+              width: 24, 
+              height: 24, 
+              child: (trailingButton != null) ? trailingButton! : const SizedBox(width: 24, height: 24,)
+            ),
           ],
         )
-        )
+      )
     );
   }
 }

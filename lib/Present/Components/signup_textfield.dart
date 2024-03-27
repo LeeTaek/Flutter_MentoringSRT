@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_srt/Present/Components/notosans_text.dart';
 
 class SignupTextField extends StatefulWidget { 
   final String title; 
@@ -9,12 +10,11 @@ class SignupTextField extends StatefulWidget {
   final bool isValid;
   final bool? obscureText;
   final int? maxLength;
-  bool isTextNotEmpty = false;
-  bool? enabled;
-  TextInputType? textInputType;
-  VoidCallback? validation;
+  final bool? enabled;
+  final TextInputType? textInputType;
+  final VoidCallback? validation;
 
-  SignupTextField({ 
+  const SignupTextField({ 
     Key? key,
     required this.title,
     required this.placeholder,
@@ -33,9 +33,10 @@ class SignupTextField extends StatefulWidget {
 }
 
 class SignupTextFieldState extends State<SignupTextField> { 
-  late Text _titleLabel; 
-  late Text _errorLabel;
+  late NotoSansText _titleLabel; 
+  late NotoSansText _errorLabel;
   final focusNode = FocusNode();
+  bool isTextNotEmpty = false;
 
   @override 
   void initState() { 
@@ -43,22 +44,17 @@ class SignupTextFieldState extends State<SignupTextField> {
     widget.controller.addListener(_updateTextState);
     _updateTextState();
 
-    _titleLabel = Text(
-      widget.title,
-      style: const TextStyle(
-        color: Color.fromARGB(255, 136, 136, 136),
-        fontSize: 14,
-        fontFamily: 'SpoqaHanSansNeo',
-        fontWeight: FontWeight.w400
-      ),
+    _titleLabel = NotoSansText(
+      text: widget.title,
+      color: const Color.fromARGB(255, 136, 136, 136),
+      size: 14,
+      fontWeight: NotoSansFontWeight.medium
     );
 
-    _errorLabel = Text( 
-      widget.errorMessage,
-      style: const TextStyle( 
-        color: Color.fromARGB(255, 218, 29, 29), 
-        fontSize: 12, 
-      ),
+    _errorLabel = NotoSansText( 
+      text: widget.errorMessage,
+      color: const Color.fromARGB(255, 218, 29, 29), 
+      size: 12, 
     );
 
     if (widget.validation != null)  { 
@@ -68,7 +64,7 @@ class SignupTextFieldState extends State<SignupTextField> {
 
   void _updateTextState() { 
     setState(() { 
-      widget.isTextNotEmpty = widget.controller.text.isNotEmpty;
+      isTextNotEmpty = widget.controller.text.isNotEmpty;
     });
   }
 
@@ -96,8 +92,8 @@ class SignupTextFieldState extends State<SignupTextField> {
                     )
                   )
               ), 
-              clearButtonMode: widget.isTextNotEmpty ? OverlayVisibilityMode.always : OverlayVisibilityMode.never,
-              suffix: widget.isTextNotEmpty 
+              clearButtonMode: isTextNotEmpty ? OverlayVisibilityMode.always : OverlayVisibilityMode.never,
+              suffix: isTextNotEmpty 
               ? CupertinoButton(
                 onPressed: () => widget.controller.clear(),
                 padding: EdgeInsets.zero,

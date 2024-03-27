@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_srt/Present/Components/notosans_text.dart';
 
 class PopupPage extends StatelessWidget { 
   final String description;
@@ -27,14 +27,9 @@ class PopupPage extends StatelessWidget {
             children: [ 
               Padding(
                 padding: const EdgeInsets.fromLTRB(32, 34, 32, 19),
-                child: Text(
-                  description,
-                  style: const TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0),
-                    fontSize: 16,
-                    fontFamily: 'SpoqaHanSansNeo',
-                    fontWeight: FontWeight.w400
-                  ),
+                child: NotoSansText(
+                  text: description,
+                  fontWeight: NotoSansFontWeight.medium
                 )
               ),
               Padding( 
@@ -49,14 +44,9 @@ class PopupPage extends StatelessWidget {
                 onPressed: () { 
                   Navigator.of(context).pop();
                 },
-                child: const Text(
-                  "확인",
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0),
-                    fontSize: 16,
-                    fontFamily: 'SpoqaHanSansNeo',
-                    fontWeight: FontWeight.w400
-                  ),
+                child: NotoSansText(
+                  text: "확인",
+                  fontWeight: NotoSansFontWeight.medium
                 ),
               ),
             ],
